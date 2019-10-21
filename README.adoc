@@ -1,7 +1,8 @@
 Recently our collegues asked if we could create some kiosk-mode computer to project some video during the events.
 Surprisingly, we found some instruction how to create kiosk mode over LInux, but almost always these instructions were a little bit complicated ou need some special cases (like the completly new (vanilla) system etc).
 
-So, we have created our own standard ( https://xkcd.com/927/ ).
+So, we have created our own standard ( https://xkcd.com/927/ ) based on *CentOS7*.
+
 It seems really simple for me, but it's doing his job.
 
 Idea and web-laoyout of Julien Vincent. Realisation Paul Zakharov (@paulz1)
