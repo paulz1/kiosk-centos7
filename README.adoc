@@ -45,7 +45,9 @@ yum update
 yum install google-chrome-stable
 ----
 
-== 4) Login as kiosk user and create kiosk.desktop in *$HOME/.config/autostart* :
+== 4) Configure autostart
+
+Login as kiosk user and create kiosk.desktop in *$HOME/.config/autostart* :
 
 [shell]
 ----
