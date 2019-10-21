@@ -33,7 +33,9 @@ AutomaticLoginEnable=True
 AutomaticLogin=kiosk
 ----
 
-== 3) We decide to use chrome for our kiosk, so add *google-chrome.repo* in */etc/yum.repos.d*
+== 3) Install Google Chrome
+
+We decide to use chrome for our kiosk, so add *google-chrome.repo* in */etc/yum.repos.d*
 
 Then
 [shell]
