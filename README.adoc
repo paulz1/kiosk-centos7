@@ -1,0 +1,93 @@
+Recently our collegues asked if we could create some kiosk-mode computer to project some video during the events.
+Surprisingly, we found some instruction how to create kiosk mode over LInux, but almost always these instructions were a little bit complicated ou need some special cases (like the completly new (vanilla) system etc).
+
+So, we have created our own standard ( https://xkcd.com/927/ ).
+It seems really simple for me, but it's doing his job.
+
+Idea and web-laoyout of Julien Vincent. Realisation Paul Zakharov (@paulz1)
+
+== 1) Create user kiosk
+
+[shell]
+----
+useradd -m kiosk
+----
+define password
+
+== 2) Activate autostart
+We use gdm, so
+
+[shell]
+----
+vim /etc/gdm/custom.conf
+----
+
+after [daemon] add
+[shell]
+----
+AutomaticLoginEnable=True
+AutomaticLogin=kiosk
+----
+
+== 3) We decide to use chrome for our kiosk, so add *google-chrome.repo* in */etc/yum.repos.d*
+
+Then
+[shell]
+----
+yum clean all
+yum update
+yum install google-chrome-stable
+----
+
+== 4) Login as kiosk user and create kiosk.desktop in *$HOME/.config/autostart* :
+
+[shell]
+----
+[Desktop Entry]
+Type=Application
+Name=kiosk
+Exec=google-chrome-stable --kiosk file:///home/kiosk/webtest/index.html
+X-GNOME-Autostart-enabled=true
+----
+
+== 5) Create */home/kiosk/webtest/index.html*
+
+=== 5.a) We will use bootstrap for our page, so at first we downalod boostrap files and styles (as our kiosk should work without network).
+
+[shell]
+----
+cd /home/kiosk/webtest/
+mkdir bootstrap
+cd bootstrap
+wget https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
+wget https://code.jquery.com/jquery-3.3.1.slim.min.js
+wget https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js
+wget https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
+----
+
+=== 5.b) Create an index.html using HTML5 video tag.
+
+[html]
+----
+<video style="width:600px;max-width:100%;" controls>
+   <source src="video.mp4" type="video/mp4">
+</video>
+----
+Create a layout up to you needs using bootstrap
+
+We put video files into */home/webtest/video* directory
+
+May be, in the future, I add a python script to create an index.html using files in video directory, but in our case we created it manually (copy-paste).
+Almost in all the cases we used absolute path, as we had not much time and we would like to be sure that it works.
+
+== 6) Some caveats
+
+* to achieve a real kiosk mode we unplug keyboard from computer, so it's not so easy to get out form kiosk mode;
+
+* we discovered that Chrome does not play sound in ac3 format.
+So we re-encode our video that used ac3 codecs.
+
+[shell]
+----
+ffmpeg -i video.mp4 -vcodec h264 -acodec aac -strict -2 video_1.mp4
+----
