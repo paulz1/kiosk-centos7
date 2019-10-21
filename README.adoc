@@ -1,5 +1,5 @@
 :toc:
-:toclevels: 5
+:toclevels: 4
 
 Recently our collegues asked if we could create some kiosk-mode computer to project some video during the events.
 Surprisingly, we found some instruction how to create kiosk mode over LInux, but almost always these instructions were a little bit complicated ou need some special cases (like the completly new (vanilla) system etc).
